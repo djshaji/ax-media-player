@@ -12,6 +12,7 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import org.acoustixaudio.axmediaplayer.Providers.ApacheIndex;
 import org.acoustixaudio.axmediaplayer.Providers.Demo;
 import org.acoustixaudio.axmediaplayer.Providers.Local;
 
@@ -19,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
 
     RecyclerView recyclerView ;
     Context context ;
-    private Adapter adapter;
+    public Adapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,10 +41,7 @@ public class MainActivity extends AppCompatActivity {
         adapter = new Adapter(this);
         recyclerView.setAdapter(adapter);
 
-        Local local = new Local(this);
-        for (MediaFile m :
-                local.listFiles(null)) {
-            adapter.add(m);
-        }
+        ApacheIndex apacheIndex = new ApacheIndex();
+        apacheIndex.loadAsync(this, "http://192.168.1.200/local");
     }
 }
